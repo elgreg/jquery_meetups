@@ -33,7 +33,13 @@
     * jquery 1.4.3/1.4.4 presentation
     * voting on presentations for next time?
     * What's your mandatory javascript and/or jquery reading?
-    * Favorite Plugin
+    *
+    * How long have you been using jQuery?
+    * What's your favorite jQuery plugin?
+    * What other javaScript libraries have you used?
+    * What's your IDE?
+    * Firebug or Webkit/Chrome Developer Tools?
+    * What's your favorite blog/rss feed for jQuery and Javascript news.
     
     
     
@@ -63,8 +69,7 @@
 
 
 */
-        console.log($.cssHooks)
-        
+   if($.fn.jquery > '1.4.2'){
         $.cssHooks.fontColor = {
           "set": function( elem, value ){
             elem.style['color'] = value;
@@ -76,11 +81,20 @@
         
         $('section#css p:first').click(function(){
           
-          $('#message').trigger('update', 'The text color is: ' + $(this).css('fontColor') + '</p>');
-        
           $(this).css('fontColor','green');
           
-        });
+          $('#message').trigger('update', ['The text color is: ' + $(this).css('fontColor') + '</p>', true]);
+          
+        }).css('cursor','pointer');
+        
+        $('section#css p:last').click(function(){
+          
+          $(this).css('fontColor','blue');
+          
+          $('#message').trigger('update', ['The text color is: ' + $(this).css('fontColor') + '</p>', true]);
+          
+        }).css('cursor','pointer');
+   }
         
         // https://github.com/lrbabe/jquery.rotate.js
         // https://github.com/brandonaaron/jquery-cssHooks
@@ -112,8 +126,43 @@
          
               
          
+              $('section#data-attributes h1').click( firstDataClick ).css('cursor','pointer');
+              
+              
+              function firstDataClick(){
+                
+                var msg = "Calling the .data() method on the first paragraph."
+  
+                $('#message').trigger('update', [msg, true]);
+                
+                var firstpData = $('section#data-attributes p:first').data();
+                
+                msg = "The data for the first paragraph is now: " + JSON.stringify(firstpData);
+                
+                $('#message').trigger('update', msg);
+                
+                
+                $(this).unbind('click').click( secondDataClick );
+                
+              }
+              
+              function secondDataClick(){
+                var msg = "Calling the .data() method on the second paragraph."
+  
+                  $('#message').trigger('update', [msg, true]);
+                  
+                  var secondpData = $('section#data-attributes p:eq(1)').data();
+                
+                  msg = "The data for the second paragraph is now: " + JSON.stringify(secondpData);
+                
+                  $('#message').trigger('update', msg);
+                  
+                  $(this).unbind('click').click( firstDataClick );
+                  
+              }
+              
          
-         
+              
          
          
          
@@ -132,11 +181,24 @@
 
         
   */
-        
-        
-        
-        
-        
+            $('section#data-jsobjects h1').click(function(){
+              
+              var sampleObject = {"name": "Thomas"};
+              var msg = 'starging object: ' + JSON.stringify(sampleObject);
+
+              $('#message').trigger('update', [msg, true]);
+              
+              $(sampleObject).data("name", "Greg");
+              
+              msg = 'updated with <pre>$(sampleObject).data("name", "Greg");</pre> makes: ' + JSON.stringify(sampleObject);
+              
+              $('#message').trigger('update', msg);
+
+            }).css('cursor','pointer');
+              
+              
+              
+              
         
   /*
          
@@ -152,8 +214,32 @@
               
               
   */
-        
-        
+              
+              $('section#data-events h1').click(function(){
+                var sampleObject = {"name": "Thomas",
+                                    "phoneNumber": "(202) 758-5814"};
+                
+                $('section#data-events p:first').html('The object is starts as: <pre> ' + JSON.stringify(sampleObject) + '</pre>');
+                     
+                $('#message').trigger('update', ['Click on the first paragraph of the data events section', true]);
+                
+                $('section#data-events p:first').unbind('click').click(function(){
+                  
+                  $(sampleObject).data("phoneNumber","(202) 555-1212");
+                  
+                });
+ 
+                
+                $(sampleObject).bind("changeData", function( event, name, value ){
+                  
+                  $('#message').trigger('update', 'On click, we run:  <pre>$(sampleObject).data("phoneNumber","(202) 555-1212");</pre>');
+                  
+                  $('section#data-events p:first').html('The object is now: <pre> ' + JSON.stringify(sampleObject) + '</pre>');
+                });
+                
+              }).css('cursor','pointer');
+                
+              
         
         
         
@@ -168,8 +254,45 @@
                MM    MM    MM    MM  L.   I8 YM.    , 
              .JMML  JMML  JMML..JMML.M9mmmP'  YMbmd'
            
+              The miscellaneous update for data with a new object extends it
+              rather than replacing it.
+  */              
+               
+              $('section#data-misc h1').click(function(){
+                var sampleObject = {"name": "Thomas",
+                                    "phoneNumber": "(202) 758-5814"};
                 
-  */
+                
+                $('section#data-misc p:first').html('The object is starts as: <pre> ' + JSON.stringify(sampleObject) + '</pre>');
+                     
+                $('#message').trigger('update', ['Click on the first paragraph of the data events section', true]);
+
+                $('section#data-misc p:first').unbind('click').click(function(){
+                  
+                  $('#message').trigger('update', ['On click, we run:  <pre>$(sampleObject).data({"phoneNumber":"(202) 555-1212","country": "USA"});</pre>', true]);
+                  $(sampleObject).data({"phoneNumber":"(202) 555-1212","country": "USA"});
+                  
+                  $('section#data-misc p:first').html('The object is now: <pre> ' + JSON.stringify(sampleObject) + '</pre>');
+                });
+                
+                /* Object extension doesn't appear to trigger changeData or setData */
+                $(sampleObject).bind("changeData", function( event, name, value ){
+                  $('section#data-misc p:first').html('The object is now: <pre> ' + JSON.stringify(sampleObject) + '</pre>');
+                });
+                
+                $(sampleObject).bind("setData", function(event, name, value){
+                  
+                  $('#message').trigger('update', ['setData was fired']);  
+                  
+                });
+                  
+              }).css('cursor','pointer');
+              
+              
+  
+  
+  
+        
         
         
         
@@ -187,6 +310,11 @@
        `Mbmo.JMML.  `Moo9^Yo.   W     `Mbmmd'.JMML.   M9mmmP' .JMML..JMML  JMML.YMMMMMb  
                                                                                6'     dP 
                                                                                Ybmmmd'
+                                                                               
+                                                                               
+                                                                               
+PERFORMANCE EHANCEMENTS
+http://blog.jquery.com/2010/10/16/jquery-143-released/
 */
         
         
@@ -195,39 +323,6 @@
         
         
         
-/*
-              ,,                     
-              db                     
-                                     
-      ,6"Yb.`7MM  ,6"Yb.  `7M'   `MF'
-     8)   MM  MM 8)   MM    `VA ,V'  
-      ,pm9MM  MM  ,pm9MM      XMX    
-     8M   MM  MM 8M   MM    ,V' VA.  
-     `Moo9^Yo.MM `Moo9^Yo..AM.   .MA.
-           QO MP                     
-           `bmP                      
-*/
-
- /*
-         
-                                                            
-                                                        
-                                           mm           
-                                           MM           
-      .gP"Ya `7M'   `MF'.gP"Ya `7MMpMMMb.mmMMmm ,pP"Ybd 
-     ,M'   Yb  VA   ,V ,M'   Yb  MM    MM  MM   8I   `" 
-     8M""""""   VA ,V  8M""""""  MM    MM  MM   `YMMMa. 
-     YM.    ,    VVV   YM.    ,  MM    MM  MM   L.   I8 
-      `Mbmmd'     W     `Mbmmd'.JMML  JMML.`MbmoM9mmmP'
-      
-              
-*/
- 
- 
-// false on bind events
-        
-$('section#events a:first').bind('click',{"test_one": 1}, false);
-
 
 
 /*
@@ -242,10 +337,90 @@ $('section#events a:first').bind('click',{"test_one": 1}, false);
      `Mbmmd'.JMML..JMML.`Mbmmd'  YMbmd'   `MbmoM9mmmP'
      
  
+ All animate methods now support easing. Much like how .animate() supports an easing argument (to be utilized by an easing plugin)
+ 
+*/
+  //  Easing support
+  
+  $('section#effects p:first').click(function(){
+    $(this).height(100).hide(1000, 'swing', function(){ $(this).height('auto').show(); });
+  }).css('cursor','pointer');
+  
+  $('section#effects p:eq(1)').click(function(){
+    $(this).height(100).hide(1000, 'linear', function(){ $(this).height('auto').show(); });
+  }).css('cursor','pointer');
+  
+  
+  // jQuery.fx.interval
+  
+  $('section#effects p:eq(2)').click(function(){
+    
+    $.fx.interval = 100;
+    
+    $('#message').trigger('update', ['jQuery.fx.interval set to 100. try animations again!', true]);
+    
+  }).css('cursor','pointer');
+  
+  $('section#effects p:eq(3)').click(function(){
+    
+    $.fx.interval = 5;
+    
+    $('#message').trigger('update', ['jQuery.fx.interval set to 5. try animations again!', true]);
+    
+  }).css('cursor','pointer');
+
+  // .fadeToggle() New in 1.4.4
+  
+  $('section#effects p:eq(4)').click(function(){
+    
+    $.fx.interval = 5;
+    
+    $('#message').trigger('update', ['jQuery.fx.interval set to ' + $.fx.interval + '. try animations again!', true]);
+    
+  }).css('cursor','pointer');
+  
+  
+  $('section#effects button.fade-toggle').click(function(){
+    
+    $('section#effects p:eq(5)').fadeToggle();
+    
+  }).css('cursor','pointer');
+
+/*
+              ,,                     
+              db                     
+                                     
+      ,6"Yb.`7MM  ,6"Yb.  `7M'   `MF'
+     8)   MM  MM 8)   MM    `VA ,V'  
+      ,pm9MM  MM  ,pm9MM      XMX    
+     8M   MM  MM 8M   MM    ,V' VA.  
+     `Moo9^Yo.MM `Moo9^Yo..AM.   .MA.
+           QO MP                     
+           `bmP                      
 */
 
+// jQuery.readyWait
 
-//        .fadeToggle() New in 1.4.4
+// jQuery.support.ajax
+
+
+ /*
+         
+                                           mm           
+                                           MM           
+      .gP"Ya `7M'   `MF'.gP"Ya `7MMpMMMb.mmMMmm ,pP"Ybd 
+     ,M'   Yb  VA   ,V ,M'   Yb  MM    MM  MM   8I   `" 
+     8M""""""   VA ,V  8M""""""  MM    MM  MM   `YMMMa. 
+     YM.    ,    VVV   YM.    ,  MM    MM  MM   L.   I8 
+      `Mbmmd'     W     `Mbmmd'.JMML  JMML.`MbmoM9mmmP'
+      
+*/
+ 
+// .bind('click', false)
+ 
+// .click(data, fn)
+
+// event.namespace
 
 
         
@@ -261,6 +436,10 @@ $('section#events a:first').bind('click',{"test_one": 1}, false);
                 
 */
 
+// jQuery.type
+
+
+// jQuery.isWindow
 
 
 
@@ -268,8 +447,28 @@ $('section#events a:first').bind('click',{"test_one": 1}, false);
 
 
 
-              $("#message").bind('update',function(e, message){
-                $(this).html(message).slideDown().delay(2*1000).slideUp();
+
+
+
+
+
+/* helper thing */
+
+              $("#message").bind('update',function(e, message, reset){
+                var newP = '<p>' + message + '</p>';
+                
+                reset = typeof reset === 'undefined' && false || reset;
+                
+                if(reset){
+                  $(this).stop().empty().css({display: 'none' });
+                }
+                
+                if($(this).is(':hidden')){
+                  $(this).slideDown('fast');
+                } 
+              
+                $(this).append(newP);
+                
               });
     }); // End docready
     
@@ -283,11 +482,11 @@ $('section#events a:first').bind('click',{"test_one": 1}, false);
       }
       #message {
         padding: 4px;
-        height: 30px;
         width: 300px;
-        position: absolute;
+        position: fixed;
+        margin: 0 auto;
         top: 0;
-        left: 330px; /* 960/2-300/2 = 480-150 = 330*/
+        left: 40%;
         background-color: #E2DFC9;
         color: #111;
         display: none;
@@ -299,6 +498,14 @@ $('section#events a:first').bind('click',{"test_one": 1}, false);
         margin:  0 auto;
         position: relative;
         
+      }
+      
+      h1 {
+        font-size: 32px;
+      }
+      
+      section {
+        margin-bottom: 10px;
       }
     </style>
 </head>
@@ -312,16 +519,124 @@ $('section#events a:first').bind('click',{"test_one": 1}, false);
     <header>
       <h1>css</h1>
     </header>
-    <p>Paragraph 1</p>
+    <p>A Paragraph</p>
     
-    <p>Paragraph 2</p>
+    <p>Another Paragraph</p>
     
-    <div class="a-div">A Div</div>
+  </section>
+
+
+    
+  <section id="data-attributes">
+    <header>
+      <h1>data attributes</h1>
+    </header>
+    <p data-option='{"city": "Washington, DC"}'>A Paragraph</p>
+    
+    <p data-integer="10" data-boolean='true' data-string="string" data-array="[1,2,3]">Another Paragraph</p>
+    
+  </section>  
+
+
+    
+  <section id="data-jsobjects">
+    <header>
+      <h1>data - javascript objects</h1>
+    </header>
+    
+  </section>  
+
+
+  <section id="data-events">
+    <header>
+      <h1>data - events</h1>
+    </header>
+    
+    <p>changeData</p>
+    
+  </section>
+
+  <section id="data-misc">
+    <header>
+      <h1>data - misc</h1>
+    </header>
+    
+    <p>changeData</p>
     
   </section>
 
 
 
+  <section id="traversal">
+    <header>
+      <h1>Traversal</h1>
+    </header>
+    
+    <p>Performance enhancements: <a href="http://blog.jquery.com/2010/10/16/jquery-143-released/">http://blog.jquery.com/2010/10/16/jquery-143-released/</a></p>
+    
+  </section>
+
+  
+  <section id="effects">
+    <header>
+      <h1>Effects</h1>
+    </header>
+    
+    <p>.show(speed, <em>easing</em>, callback) - swing</p>
+    
+    <p>.show(speed, <em>easing</em>, callback) - linear</p>
+    
+    <p>jQuery.fx.interval - 100</p>
+    
+    <p>jQuery.fx.interval - 5</p>
+    
+    <p>jQuery.fx.interval - 13</p>
+    <button class="fade-toggle">fadeToggle</button>
+    <p>.fadeToggle( [ duration ], [ easing ], [ callback ] )</p>
+    
+  </section>
+  
+  
+  <section id="ajax">
+    <header>
+      <h1>Ajax</h1>
+    </header>
+    
+    <p>jQuery.readyWait</p>
+    
+    <p>jQuery.support.ajax</p>
+    
+  </section>
+
+  
+  <section id="events">
+    <header>
+      <h1>Events</h1>
+    </header>
+    
+    <p>.bind('click', <em>false</em>)</p>
+    
+    <p>.click(<em>data</em>, fn)</p>
+    
+    <p>event.namespace</p>
+    
+  </section>
+  
+  
+  <section id="misc">
+    <header>
+      <h1>Misc</h1>
+    </header>
+    
+    <p>jQuery.type</p>
+  
+    <p>jQuery.isWindow</p>
+    
+  </section>
+  
+
+  
+  
 
   </div>
 </body>
