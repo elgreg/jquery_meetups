@@ -3,11 +3,49 @@
 <html>
 <head>
     <title>jQuery meetups</title>
+    <link rel="stylesheet" href="../html5-boilerplate.style.css" media="all"/>
+    
+  
+    
     <script src="../jquery/1.4.4/jquery-1.4.4.js"></script>
+    
     <script>
+    
+    /*
+              
+                                                             ,,           
+               db                                      `7MM           
+              ;MM:                                       MM           
+             ,V^MM.    .P"Ybmmm .gP"Ya `7MMpMMMb.   ,M""bMM   ,6"Yb.  
+            ,M  `MM   :MI  I8  ,M'   Yb  MM    MM ,AP    MM  8)   MM  
+            AbmmmqMA   WmmmP"  8M""""""  MM    MM 8MI    MM   ,pm9MM  
+           A'     VML 8M       YM.    ,  MM    MM `Mb    MM  8M   MM  
+         .AMA.   .AMMA.YMMMMMb  `Mbmmd'.JMML  JMML.`Wbmd"MML.`Moo9^Yo.
+                      6'     dP                                       
+                      Ybmmmd'
+                      
+                      
+    
+    * Introductions
+    * Anyone Hiring
+    * github
+    * HashTag
+    * jquery 1.4.3/1.4.4 presentation
+    * voting on presentations for next time?
+    * What's your mandatory javascript and/or jquery reading?
+    * Favorite Plugin
+    
+    
+    
+    
+    */
+    
+    
+    
+    
     $(document).ready(function(){
         
-        /*
+/*
                                                                       ,,               ,,          
                                                                     `7MM             `7MM          
                                                                       MM               MM          
@@ -16,30 +54,275 @@
        8M       `YMMMa. `YMMMa.       MM    MM    MM 8M     M8 8MI    MM   MM    MM    MM 8M"""""" 
        YM.    , L.   I8 L.   I8       MM    MM    MM YA.   ,A9 `Mb    MM   MM    MM    MM YM.    , 
         YMbmd'  M9mmmP' M9mmmP'     .JMML  JMML  JMML.`Ybmd9'   `Wbmd"MML. `Mbod"YML..JMML.`Mbmmd' 
-        */
+
         
-        alert('ready');
+ 
+        "two very clear paths: Getting and setting an element’s .style property
+        (done through jQuery.style) and getting the current computed style
+        information of an element (done through .css() and jQuery.css
+
+
+*/
+        console.log($.cssHooks)
         
+        $.cssHooks.fontColor = {
+          "set": function( elem, value ){
+            elem.style['color'] = value;
+          },
+          "get": function ( elem, computed ){
+            return elem.style['color'];
+          }
+        }
         
-        /*
-                ,,                                                             ,,  ,,                                
-     `7MM           mm             
-       MM           MM             
-  ,M""bMM   ,6"Yb.mmMMmm  ,6"Yb.   
-,AP    MM  8)   MM  MM   8)   MM   
-8MI    MM   ,pm9MM  MM    ,pm9MM   
-`Mb    MM  8M   MM  MM   8M   MM   
- `Wbmd"MML.`Moo9^Yo.`Mbmo`Moo9^Yo. 
+        $('section#css p:first').click(function(){
+          
+          $('#message').trigger('update', 'The text color is: ' + $(this).css('fontColor') + '</p>');
+        
+          $(this).css('fontColor','green');
+          
+        });
+        
+        // https://github.com/lrbabe/jquery.rotate.js
+        // https://github.com/brandonaaron/jquery-cssHooks
+        
+/*
+
+            `7MM           mm             
+              MM           MM             
+         ,M""bMM   ,6"Yb.mmMMmm  ,6"Yb.   
+       ,AP    MM  8)   MM  MM   8)   MM   
+       8MI    MM   ,pm9MM  MM    ,pm9MM   
+       `Mb    MM  8M   MM  MM   8M   MM   
+        `Wbmd"MML.`Moo9^Yo.`Mbmo`Moo9^Yo. 
                                                                                                             
-        */
-    });
+*/
+        
+  /*
+                                              ,,  ,,                                        
+                       mm     mm              db *MM                   mm                   
+                       MM     MM                  MM                   MM                   
+               ,6"Yb.mmMMmm mmMMmm `7Mb,od8 `7MM  MM,dMMb.`7MM  `7MM mmMMmm .gP"Ya  ,pP"Ybd 
+              8)   MM  MM     MM     MM' "'   MM  MM    `Mb MM    MM   MM  ,M'   Yb 8I   `" 
+               ,pm9MM  MM     MM     MM       MM  MM     M8 MM    MM   MM  8M"""""" `YMMMa. 
+              8M   MM  MM     MM     MM       MM  MM.   ,M9 MM    MM   MM  YM.    , L.   I8 
+              `Moo9^Yo.`Mbmo  `Mbmo.JMML.   .JMML.P^YbmdP'  `Mbod"YML. `Mbmo`Mbmmd' M9mmmP'
+                  
+         
+  */
+         
+              
+         
+         
+         
+         
+         
+         
+  /*
+                                                                                                                                                   
+                ,,                                                      ,,                                ,,        ,,                                 
+                db                                                      db             mm                *MM        db                    mm           
+                                                                                       MM                 MM                              MM           
+              `7MM  ,6"Yb.`7M'   `MF',6"Yb.  ,pP"Ybd  ,p6"bo `7Mb,od8 `7MM `7MMpdMAo.mmMMmm      ,pW"Wq.  MM,dMMb.`7MM  .gP"Ya   ,p6"bo mmMMmm ,pP"Ybd 
+                MM 8)   MM  VA   ,V 8)   MM  8I   `" 6M'  OO   MM' "'   MM   MM   `Wb  MM       6W'   `Wb MM    `Mb MM ,M'   Yb 6M'  OO   MM   8I   `" 
+                MM  ,pm9MM   VA ,V   ,pm9MM  `YMMMa. 8M        MM       MM   MM    M8  MM       8M     M8 MM     M8 MM 8M"""""" 8M        MM   `YMMMa. 
+                MM 8M   MM    VVV   8M   MM  L.   I8 YM.    ,  MM       MM   MM   ,AP  MM       YA.   ,A9 MM.   ,M9 MM YM.    , YM.    ,  MM   L.   I8 
+                MM `Moo9^Yo.   W    `Moo9^Yo.M9mmmP'  YMbmd' .JMML.   .JMML. MMbmmd'   `Mbmo     `Ybmd9'  P^YbmdP'  MM  `Mbmmd'  YMbmd'   `MbmoM9mmmP' 
+             QO MP                                                           MM                                  QO MP                                 
+             `bmP                                                          .JMML.                                `bmP                                  
+
+        
+  */
+        
+        
+        
+        
+        
+        
+  /*
+         
+                                                            
+                                                                
+                                                   mm           
+                                                   MM           
+              .gP"Ya `7M'   `MF'.gP"Ya `7MMpMMMb.mmMMmm ,pP"Ybd 
+             ,M'   Yb  VA   ,V ,M'   Yb  MM    MM  MM   8I   `" 
+             8M""""""   VA ,V  8M""""""  MM    MM  MM   `YMMMa. 
+             YM.    ,    VVV   YM.    ,  MM    MM  MM   L.   I8 
+              `Mbmmd'     W     `Mbmmd'.JMML  JMML.`MbmoM9mmmP'
+              
+              
+  */
+        
+        
+        
+        
+        
+        
+  /*
+                                  ,,                   
+                                 db                   
+                                                      
+             `7MMpMMMb.pMMMb.  `7MM  ,pP"Ybd  ,p6"bo  
+               MM    MM    MM    MM  8I   `" 6M'  OO  
+               MM    MM    MM    MM  `YMMMa. 8M       
+               MM    MM    MM    MM  L.   I8 YM.    , 
+             .JMML  JMML  JMML..JMML.M9mmmP'  YMbmd'
+           
+                
+  */
+        
+        
+        
+        
+/*
+                 
+                                                                                              
+                                                                ,,                       
+       mm                                                       db                       
+       MM                                                                                
+     mmMMmm `7Mb,od8 ,6"Yb.`7M'   `MF'.gP"Ya `7Mb,od8 ,pP"Ybd `7MM  `7MMpMMMb.  .P"Ybmmm 
+       MM     MM' "'8)   MM  VA   ,V ,M'   Yb  MM' "' 8I   `"   MM    MM    MM :MI  I8   
+       MM     MM     ,pm9MM   VA ,V  8M""""""  MM     `YMMMa.   MM    MM    MM  WmmmP"   
+       MM     MM    8M   MM    VVV   YM.    ,  MM     L.   I8   MM    MM    MM 8M        
+       `Mbmo.JMML.  `Moo9^Yo.   W     `Mbmmd'.JMML.   M9mmmP' .JMML..JMML  JMML.YMMMMMb  
+                                                                               6'     dP 
+                                                                               Ybmmmd'
+*/
+        
+        
+        
+        
+        
+        
+        
+/*
+              ,,                     
+              db                     
+                                     
+      ,6"Yb.`7MM  ,6"Yb.  `7M'   `MF'
+     8)   MM  MM 8)   MM    `VA ,V'  
+      ,pm9MM  MM  ,pm9MM      XMX    
+     8M   MM  MM 8M   MM    ,V' VA.  
+     `Moo9^Yo.MM `Moo9^Yo..AM.   .MA.
+           QO MP                     
+           `bmP                      
+*/
+
+ /*
+         
+                                                            
+                                                        
+                                           mm           
+                                           MM           
+      .gP"Ya `7M'   `MF'.gP"Ya `7MMpMMMb.mmMMmm ,pP"Ybd 
+     ,M'   Yb  VA   ,V ,M'   Yb  MM    MM  MM   8I   `" 
+     8M""""""   VA ,V  8M""""""  MM    MM  MM   `YMMMa. 
+     YM.    ,    VVV   YM.    ,  MM    MM  MM   L.   I8 
+      `Mbmmd'     W     `Mbmmd'.JMML  JMML.`MbmoM9mmmP'
+      
+              
+*/
+ 
+ 
+// false on bind events
+        
+$('section#events a:first').bind('click',{"test_one": 1}, false);
+
+
+
+/*
+                                                   
+                ,...  ,...                             
+              .d' "".d' ""                mm           
+              dM`   dM`                   MM           
+     .gP"Ya  mMMmm mMMmm.gP"Ya   ,p6"bo mmMMmm ,pP"Ybd 
+    ,M'   Yb  MM    MM ,M'   Yb 6M'  OO   MM   8I   `" 
+    8M""""""  MM    MM 8M"""""" 8M        MM   `YMMMa. 
+    YM.    ,  MM    MM YM.    , YM.    ,  MM   L.   I8 
+     `Mbmmd'.JMML..JMML.`Mbmmd'  YMbmd'   `MbmoM9mmmP'
+     
+ 
+*/
+
+
+//        .fadeToggle() New in 1.4.4
+
+
+        
+/*
+                      ,,                   
+                     db                   
+                                          
+ `7MMpMMMb.pMMMb.  `7MM  ,pP"Ybd  ,p6"bo  
+   MM    MM    MM    MM  8I   `" 6M'  OO  
+   MM    MM    MM    MM  `YMMMa. 8M       
+   MM    MM    MM    MM  L.   I8 YM.    , 
+ .JMML  JMML  JMML..JMML.M9mmmP'  YMbmd'
+                
+*/
+
+
+
+
+
+
+
+
+              $("#message").bind('update',function(e, message){
+                $(this).html(message).slideDown().delay(2*1000).slideUp();
+              });
+    }); // End docready
+    
+
     </script>
+    
+    <style>
+      body {
+        background-color: #E2DFC9;
+        height: 100%;
+      }
+      #message {
+        padding: 4px;
+        height: 30px;
+        width: 300px;
+        position: absolute;
+        top: 0;
+        left: 330px; /* 960/2-300/2 = 480-150 = 330*/
+        background-color: #E2DFC9;
+        color: #111;
+        display: none;
+      }
+      
+      #container {
+        background-color: #ececec;
+        width: 960px;
+        margin:  0 auto;
+        position: relative;
+        
+      }
+    </style>
 </head>
 
 <body>
+  
+  <div id="container">
+  <div id="message"></div>
     
+  <section id="css">
+    <header>
+      <h1>css</h1>
+    </header>
+    <p>Paragraph 1</p>
+    
+    <p>Paragraph 2</p>
+    
+    <div class="a-div">A Div</div>
+    
+  </section>
 
 
 
+
+  </div>
 </body>
 </html>
