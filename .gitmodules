@@ -1,3 +1,6 @@
 [submodule "2011-01-06/jQuery-Plugin-Development"]
 	path = 2011-01-06/jQuery-Plugin-Development
 	url = http://github.com/ssoper/jQuery-Plugin-Development.git
+[submodule "jquery/jquery-source"]
+	path = jquery/jquery-source
+	url = http://github.com/jquery/jquery.git
