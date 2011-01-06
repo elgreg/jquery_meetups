@@ -8,7 +8,7 @@ Please fork and push back if you have demos and things to contribute!
 
 Installing this repo
 --------------------
-This repo uses submodules for git and for others' presentations. If you're cloning for the first time, use:
+This repo uses submodules for jquery and for others' presentations. If you're cloning for the first time, use:
     git clone --recursive http://github.com/elgreg/jquery_meetups.git
 
 If you've already cloned it, you can get the latest submodules by using
