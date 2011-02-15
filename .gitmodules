@@ -4,3 +4,6 @@
 [submodule "jquery/jquery-source"]
 	path = jquery/jquery-source
 	url = http://github.com/jquery/jquery.git
+[submodule "Capital-Bikeshare"]
+	path = Capital-Bikeshare
+	url = git://github.com/mikeymckay/Capital-Bikeshare.git
