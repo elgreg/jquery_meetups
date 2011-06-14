@@ -17,7 +17,11 @@
 
   <!-- Mobile viewport optimized: j.mp/bplateviewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <style>
+    tr.clicked {
+      background-color: #CCCC6B;
+    }
+  </style>
   
 </head>
 
@@ -79,14 +83,32 @@
         });
         
         $.each(guests, function(i,guest){
-              guestsTableBody.append('<tr><td><a href="' + guest.link + '">' + guest.name + '</a></td><td>' + guest.id + '</td><td><img width="50" height="50" src="' + guest.photo_url + '"/></td></tr>');
+            var cssClass = '';
+            if(localStorage.getItem(guest.id)){
+              cssClass = 'clicked';
+            }
+            guestsTableBody.append('<tr data-id="' + guest.id + '" class="' + cssClass + '"><td><a href="' + guest.link + '">' + guest.name + '</a></td><td>' + guest.id + '</td><td><img width="50" height="50" src="' + guest.photo_url + '"/></td></tr>');
+            
         });
         
         $('#main').append(guestsTable);
-        $('#container header').append('<h2>Total count: ' + guests.length + '</h2>'); 
+        $('#container header').append('<h2>Total count: ' + guests.length + '</h2>');
+        
+        guestsTableBody.delegate('tr','click',function(){
+          var id = $(this).data('id');
+          if($(this).hasClass('clicked')){
+            $(this).removeClass('clicked');
+            localStorage.removeItem(id);
+          } else {
+            $(this).addClass('clicked');
+            localStorage.setItem(id,true);
+          }
+          
+        });
     });
     
   });
+  
 
 
   
