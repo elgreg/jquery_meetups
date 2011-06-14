@@ -42,47 +42,50 @@
   <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
   <script>
-  var response;
-  var guests = [];
-  var guestIds = [];
-  var duplicates = [];
-  var guestsTable = $('<table id="guest-list"> <thead> <tr> <th>Name</th> <th>ID</th> <th>Photo</th> </tr> </thead> <tbody> </tbody> </table>');
-  var guestsTableBody = guestsTable.find('tbody');
-  
-  var guestTable = $('#guest-list tbody');
-  
-  $.getJSON('https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20meetup.rsvps%20where%20key%3D1d6f6b193567517f2c27343a1c2515c%20and%20(event_id%3D20672691%20%20or%20event_id%3D17965161%20or%20event_id%20%3D19751151)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=', function(data){
-      
-      response = data;
-      $.each(data.query.results.results, function(i,eventArray){
-          
-          $.each(eventArray.items.item, function(j, rsvp){
-              if($.inArray(rsvp.id, guestIds) > -1){
-                  duplicates.push(rsvp);
-              }
-              else if(rsvp.response === "yes"){
-                  guests.push(rsvp);
-                  guestIds.push(rsvp.id);
-              }
-              
-          });
-      });
-      
-      guests.sort(function(a,b){
-          if(a.name.toLowerCase() < b.name.toLowerCase())
-              return -1;
-          if(a.name.toLowerCase() > b.name.toLowerCase())
-              return 1;
-          return 0;
-      });
-      
-      $.each(guests, function(i,guest){
-            guestsTableBody.append('<tr><td><a href="' + guest.link + '">' + guest.name + '</a></td><td>' + guest.id + '</td><td><img width="50" height="50" src="' + guest.photo_url + '"/></td></tr>');
-      });
-  });
-    
   $(document).ready(function(){
+
+    var response;
+    var guests = [];
+    var guestIds = [];
+    var duplicates = [];
+    var guestsTable = $('<table id="guest-list"> <thead> <tr> <th>Name</th> <th>ID</th> <th>Photo</th> </tr> </thead> <tbody> </tbody> </table>');
+    var guestsTableBody = guestsTable.find('tbody');
+    
+    var guestTable = $('#guest-list tbody');
+    
+    $.getJSON('https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20meetup.rsvps%20where%20key%3D1d6f6b193567517f2c27343a1c2515c%20and%20(event_id%3D20672691%20%20or%20event_id%3D17965161%20or%20event_id%20%3D19751151)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=', function(data){
+        
+        response = data;
+        $.each(data.query.results.results, function(i,eventArray){
+            
+            $.each(eventArray.items.item, function(j, rsvp){
+                if($.inArray(rsvp.id, guestIds) > -1){
+                    duplicates.push(rsvp);
+                }
+                else if(rsvp.response === "yes"){
+                    guests.push(rsvp);
+                    guestIds.push(rsvp.id);
+                }
+                
+            });
+        });
+        
+        guests.sort(function(a,b){
+            if(a.name.toLowerCase() < b.name.toLowerCase())
+                return -1;
+            if(a.name.toLowerCase() > b.name.toLowerCase())
+                return 1;
+            return 0;
+        });
+        
+        $.each(guests, function(i,guest){
+              guestsTableBody.append('<tr><td><a href="' + guest.link + '">' + guest.name + '</a></td><td>' + guest.id + '</td><td><img width="50" height="50" src="' + guest.photo_url + '"/></td></tr>');
+        });
+        
         $('#main').append(guestsTable);
+        $('#container header').append('<h2>Total count: ' + guests.length + '</h2>'); 
+    });
+    
   });
 
 
