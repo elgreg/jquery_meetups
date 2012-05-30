@@ -62,7 +62,6 @@
         response = data;
         $.each(data.query.results.results, function(i,eventArray){
             
-            console.log( eventArray);
             $.each(eventArray.items.item, function(j, rsvp){
 
                 if($.inArray(rsvp.id, guestIds) > -1){
