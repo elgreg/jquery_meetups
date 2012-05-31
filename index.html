@@ -52,6 +52,7 @@
     var guests = [];
     var guestIds = [];
     var duplicates = [];
+    var clicked = 0;
     var guestsTable = $('<table id="guest-list"> <thead> <tr> <th>Name</th> <th>ID</th> <th>Photo</th> </tr> </thead> <tbody> </tbody> </table>');
     var guestsTableBody = guestsTable.find('tbody');
     // All the meetup IDs
@@ -59,6 +60,12 @@
     var eventQuery = encodeURI('event_id=' +  meetupIds.join(' or event_id=') );
 
     var guestTable = $('#guest-list tbody');
+
+    function updateClicked(){
+        clicked = $('.clicked');
+        $('#checkedincount').remove();
+        $('#container header').append('<h2 id="checkedincount">Checked In Count: ' + clicked.length + '</h2>');
+    }
     
     $.getJSON('https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20meetup.rsvps%20where%20key%3D1d6f6b193567517f2c27343a1c2515c%20and%20('+eventQuery+')&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=', function(data){
         
@@ -92,11 +99,11 @@
               cssClass = 'clicked';
             }
             guestsTableBody.append('<tr data-id="' + guest.id + '" class="' + cssClass + '"><td><a href="' + guest.link + '">' + guest.name + '</a></td><td>' + guest.id + '</td><td><img width="50" height="50" src="' + guest.photo_url + '"/></td></tr>');
-            
         });
         
         $('#main').append(guestsTable);
         $('#container header').append('<h2>Total count: ' + guests.length + '</h2>');
+        updateClicked();
         
         guestsTableBody.delegate('tr','click',function(){
           var id = $(this).data('id');
@@ -107,6 +114,7 @@
             $(this).addClass('clicked');
             localStorage.setItem(id,true);
           }
+          updateClicked();
           
         });
     });
